@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FolderLock, Route, Search } from "lucide-react";
+import { Footprints, FolderLock, Route, Search } from "lucide-react";
 import { useT } from "@/lib/i18n/I18nProvider";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +13,7 @@ export function CaseTabs({ caseId }: { caseId: string }) {
 
   const tabs = [
     { href: base, label: t("roadmap.title"), icon: Route, exact: true },
+    { href: `${base}/guide`, label: t("guide.tab"), icon: Footprints, exact: false },
     { href: `${base}/documents`, label: t("vault.title"), icon: FolderLock, exact: false },
     { href: `${base}/unclaimed`, label: t("unclaimed.title"), icon: Search, exact: false },
   ];

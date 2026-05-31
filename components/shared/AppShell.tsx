@@ -6,6 +6,7 @@ import { useAuth } from "@/lib/auth/AuthProvider";
 import { TopBar } from "@/components/shared/TopBar";
 import { DisclaimerFooter } from "@/components/shared/Disclaimer";
 import { Logo } from "@/components/shared/Logo";
+import { ChatWidget } from "@/components/chat/ChatWidget";
 
 /** Wraps authenticated app pages: top bar, route protection, footer disclaimer. */
 export function AppShell({ children }: { children: React.ReactNode }) {
@@ -30,6 +31,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <TopBar />
       <main className="flex-1">{children}</main>
       <DisclaimerFooter />
+      <ChatWidget />
     </div>
   );
 }

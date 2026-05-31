@@ -148,6 +148,10 @@ export const en = {
     buildingTitle: "Preparing your roadmap…",
     buildingSub: "Our care team of agents is reviewing everything for you.",
     finishCta: "See my roadmap",
+    docsHaveTitle: "Which documents do you already have?",
+    docsHaveSub:
+      "Tick the ones you have. We'll build your step-by-step path around them — and show you exactly where to get the rest.",
+    docsHaveHint: "Not sure about one? Leave it unticked — we'll gently guide you to it.",
   },
   roadmap: {
     title: "Your roadmap",
@@ -271,6 +275,54 @@ export const en = {
     listening: "Listening…",
     speak: "Tap and speak",
     notSupported: "Voice isn't available on this device.",
+  },
+  guide: {
+    tab: "Step-by-step",
+    intro:
+      "Tell me which certificates you already have, and I'll lay out your path from the very first step to the last — where to go and what to do at each one. You can update this anytime.",
+    checklistTitle: "Which documents do you already have?",
+    checklistSub:
+      "Tick what you have. Your steps update instantly — and we'll show you exactly where to get whatever is missing.",
+    stepsTitle: "Your step-by-step path",
+    stepsSub: "In order, from where you are now to the very end. Take it one step at a time.",
+    where: "Where to go",
+    whatToDo: "What to do",
+    willPrepare: "Antim Sahara can prepare",
+    produces: "You'll receive",
+    ready: "Ready now",
+    blocked: "Waiting",
+    done: "Done",
+    openStep: "Open this step",
+    haveCount: "You have {have} of {total} key documents.",
+    nextReady: "Your next ready step: “{title}”.",
+    gatherMore: "Gather the documents above to unlock your next steps.",
+    allReady: "Wonderful — you have what you need to move forward.",
+  },
+  chat: {
+    fab: "Open Saathi, your companion",
+    fabLabel: "Ask Saathi",
+    title: "Saathi",
+    subtitle: "Here with you, gently",
+    subtitleCase: "Walking beside you for {name}",
+    greeting:
+      "I'm Saathi, your companion through this. Ask me anything — what to do first, which papers you need, or where to go. We'll take it gently, together.",
+    greetingCase:
+      "I'm here with you as you care for {name}'s affairs. Ask me what to do first, which documents you'll need, or where to go — we'll take it one step at a time.",
+    placeholder: "Ask anything… I'm here",
+    send: "Send",
+    clear: "Clear conversation",
+    thinking: "Saathi is thinking…",
+    basedOn: "Based on",
+    error:
+      "I'm so sorry — I couldn't reach my guidance just now. Please try once more; I'm still right here with you.",
+    disclaimer: "Saathi offers gentle guidance, not legal advice. Please verify details locally.",
+    sNext: "What should I do first?",
+    sRegister: "How do I register the death?",
+    sDocs: "Which documents do I need?",
+    sSuccession: "Explain Succession Certificate",
+    sUnclaimed: "Trace unclaimed money",
+    sBank: "How do I claim the bank account?",
+    sHeir: "Who inherits?",
   },
 };
 

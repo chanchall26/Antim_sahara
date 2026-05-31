@@ -30,9 +30,11 @@ import {
   RELIGION_OPTIONS,
 } from "@/lib/constants";
 import { runOrchestrate, runParseDocument, fileToBase64 } from "@/lib/agents/client";
-import type { Asset, AssetType, Deceased, Relationship, Religion } from "@/types";
+import { DOC_LABELS } from "@/lib/docLabels";
+import { GUIDE_DOC_TYPES, saveOwnedDocs } from "@/lib/guide/documentGuide";
+import type { Asset, AssetType, Deceased, DocType, Relationship, Religion } from "@/types";
 
-const TOTAL = 5;
+const TOTAL = 6;
 
 interface DraftAsset {
   id: string;
@@ -62,7 +64,11 @@ export function IntakeWizard() {
   const [state, setState] = useState("");
   const [hadWill, setHadWill] = useState<boolean | null>(null);
   const [assets, setAssets] = useState<DraftAsset[]>([]);
+  const [ownedDocs, setOwnedDocs] = useState<DocType[]>([]);
   const [certFile, setCertFile] = useState<File | null>(null);
+
+  const toggleDoc = (doc: DocType) =>
+    setOwnedDocs((prev) => (prev.includes(doc) ? prev.filter((d) => d !== doc) : [...prev, doc]));
 
   const canNext = (() => {
     if (step === 1) return name.trim().length > 1 && !!dod;
@@ -117,6 +123,12 @@ export function IntakeWizard() {
 
     // Build the case + run the orchestrator.
     const created = createCase({ deceased, relationshipToDeceased: relationship, assets: cleanAssets });
+
+    // Seed the step-by-step guide with the documents the family told us they have.
+    const seededDocs = certFile
+      ? [...new Set<DocType>([...ownedDocs, "death_certificate"])]
+      : ownedDocs;
+    saveOwnedDocs(created.id, seededDocs);
     try {
       const { tasks, notes } = await runOrchestrate({
         deceased,
@@ -251,6 +263,43 @@ export function IntakeWizard() {
           )}
 
           {step === 5 && (
+            <StepShell title={t("onboarding.docsHaveTitle")} sub={t("onboarding.docsHaveSub")}>
+              <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                {GUIDE_DOC_TYPES.map((doc) => {
+                  const active = ownedDocs.includes(doc);
+                  return (
+                    <button
+                      key={doc}
+                      type="button"
+                      onClick={() => toggleDoc(doc)}
+                      aria-pressed={active}
+                      className={[
+                        "flex items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm font-medium transition-all",
+                        active
+                          ? "border-primary bg-primary-soft text-primary shadow-sm"
+                          : "border-border bg-card text-foreground hover:bg-muted",
+                      ].join(" ")}
+                    >
+                      <span
+                        className={[
+                          "flex h-5 w-5 shrink-0 items-center justify-center rounded-md border transition-colors",
+                          active
+                            ? "border-primary bg-primary text-primary-foreground"
+                            : "border-border",
+                        ].join(" ")}
+                      >
+                        {active && <Check className="h-3.5 w-3.5" />}
+                      </span>
+                      {DOC_LABELS[doc]}
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="text-xs text-muted-foreground">{t("onboarding.docsHaveHint")}</p>
+            </StepShell>
+          )}
+
+          {step === 6 && (
             <StepShell title={t("onboarding.q5Title")} sub={t("onboarding.q5Sub")}>
               <label className="flex cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-border bg-muted/40 p-10 text-center transition-colors hover:bg-muted">
                 <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-soft text-primary">
