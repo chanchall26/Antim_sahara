@@ -93,6 +93,8 @@ export const hi: DeepPartial<Dictionary> = {
     otp: "6-अंकों का कोड दर्ज करें",
     verify: "सत्यापित करें और आगे बढ़ें",
     signInCreate: "ईमेल से आगे बढ़ें",
+    continueGoogle: "Google से जारी रखें",
+    orEmail: "या ईमेल से",
     continueDemo: "डेमो मोड में देखें",
     or: "या",
     demoNote: "डेमो मोड आपको सब कुछ तुरंत आज़माने देता है — किसी खाते की ज़रूरत नहीं।",

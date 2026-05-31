@@ -89,6 +89,8 @@ export const en = {
     otp: "Enter the 6-digit code",
     verify: "Verify & continue",
     signInCreate: "Continue with email",
+    continueGoogle: "Continue with Google",
+    orEmail: "or with email",
     continueDemo: "Explore in demo mode",
     or: "or",
     demoNote: "Demo mode lets you try everything instantly — no account needed.",

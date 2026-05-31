@@ -25,6 +25,8 @@ interface AuthValue {
   signInDemo: (name?: string) => AppUser;
   /** Real email + password auth (creates the account if new, else signs in). */
   signInWithEmail: (email: string, password: string, name?: string) => Promise<AppUser>;
+  /** Google sign-in via popup. */
+  signInWithGoogle: () => Promise<AppUser>;
   signOut: () => void;
   usingFirebase: boolean;
 }
@@ -65,11 +67,20 @@ function friendlyError(code: string): string {
       return "An account already exists — signing you in instead.";
     case "auth/operation-not-allowed":
     case "auth/configuration-not-found":
-      return "Email sign-in isn't switched on yet. Please use demo mode for now.";
+      return "This sign-in method isn't switched on yet. Please use demo mode for now.";
     case "auth/network-request-failed":
       return "Network problem. Please check your connection and try again.";
     case "auth/too-many-requests":
       return "Too many attempts. Please wait a moment and try again.";
+    case "auth/popup-closed-by-user":
+    case "auth/cancelled-popup-request":
+      return "Sign-in was cancelled. Please try again.";
+    case "auth/popup-blocked":
+      return "Your browser blocked the popup. Please allow popups and try again.";
+    case "auth/account-exists-with-different-credential":
+      return "This email is already registered with a different sign-in method.";
+    case "auth/unauthorized-domain":
+      return "This site isn't authorised for Google sign-in yet.";
     default:
       return "Something went wrong. Please try again, or use demo mode.";
   }
@@ -184,6 +195,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [persist],
   );
 
+  const signInWithGoogle = useCallback(async (): Promise<AppUser> => {
+    if (!firebaseEnabled || !auth) {
+      return persist({
+        uid: makeId("u"),
+        displayName: "Google user",
+        preferredLanguage:
+          (typeof window !== "undefined" && localStorage.getItem("antim.locale")) || "en",
+        createdAt: Date.now(),
+      });
+    }
+    const { GoogleAuthProvider, signInWithPopup } = await import("firebase/auth");
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: "select_account" });
+    try {
+      const cred = await signInWithPopup(auth, provider);
+      return {
+        uid: cred.user.uid,
+        displayName: cred.user.displayName ?? cred.user.email?.split("@")[0],
+        email: cred.user.email ?? undefined,
+        preferredLanguage:
+          (typeof window !== "undefined" && localStorage.getItem("antim.locale")) || "en",
+        createdAt: Date.now(),
+      };
+    } catch (e) {
+      const code = (e as { code?: string }).code ?? "unknown";
+      const err: AuthError = { code, message: friendlyError(code) };
+      throw err;
+    }
+  }, [persist]);
+
   const signOut = useCallback(() => {
     if (firebaseEnabled && auth) {
       import("firebase/auth").then(({ signOut: fbSignOut }) => fbSignOut(auth!));
@@ -198,10 +239,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       loading,
       signInDemo,
       signInWithEmail,
+      signInWithGoogle,
       signOut,
       usingFirebase: firebaseEnabled,
     }),
-    [user, loading, signInDemo, signInWithEmail, signOut],
+    [user, loading, signInDemo, signInWithEmail, signInWithGoogle, signOut],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
