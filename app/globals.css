@@ -1,0 +1,264 @@
+@import "tailwindcss";
+
+/*
+  ANTIM SAHARA — Design System
+  Premium WARM-DARK by default (dignified, modern, comforting), with a light option.
+  Built for clarity at every age: large type, high contrast, big tap targets, obvious actions.
+*/
+
+/* ── DARK (default) — deep warm plum-charcoal with luminous accents ── */
+:root {
+  color-scheme: dark;
+
+  --background: #15131c;
+  --foreground: #f1ece4;
+  --card: #1f1a29;
+  --card-foreground: #f1ece4;
+  --elevated: #271f33;
+  --muted: #2a2436;
+  --muted-foreground: #aca0b6;
+  --border: #372e45;
+  --input: #372e45;
+  --ring: #a99cff;
+
+  --primary: #a99cff;        /* luminous indigo-violet */
+  --primary-foreground: #181024;
+  --primary-soft: #2b2347;
+
+  --secondary: #38d9c0;      /* bright teal */
+  --secondary-foreground: #06231f;
+  --secondary-soft: #143a35;
+
+  --accent: #f2a368;         /* warm amber */
+  --accent-foreground: #2a1607;
+  --accent-soft: #3b2a1b;
+
+  --gold: #f3c84e;
+  --gold-soft: #3a3015;
+  --rose: #f58ca4;
+  --rose-soft: #3b1f2a;
+
+  --success: #5fd08a;
+  --success-soft: #163726;
+  --warning: #eec95a;
+  --warning-soft: #3a3016;
+  --danger: #fb7b79;
+  --danger-soft: #3c2020;
+  --info: #84b2ea;
+  --info-soft: #1a2a3e;
+
+  --radius: 1.15rem;
+}
+
+/* ── LIGHT — warm cream (toggle) ── */
+.light {
+  color-scheme: light;
+
+  --background: #fbf6ee;
+  --foreground: #2c2722;
+  --card: #fffdfa;
+  --card-foreground: #2c2722;
+  --elevated: #ffffff;
+  --muted: #f3e9da;
+  --muted-foreground: #6a6053;
+  --border: #ebdfce;
+  --input: #e4d7c2;
+  --ring: #5b54cf;
+
+  --primary: #5b54cf;
+  --primary-foreground: #ffffff;
+  --primary-soft: #eceafb;
+
+  --secondary: #0f8d7f;
+  --secondary-foreground: #ffffff;
+  --secondary-soft: #d9f3ee;
+
+  --accent: #c66a32;
+  --accent-foreground: #ffffff;
+  --accent-soft: #f9e9da;
+
+  --gold: #d99a2b;
+  --gold-soft: #fbeecb;
+  --rose: #c45b73;
+  --rose-soft: #f7e2e6;
+
+  --success: #2f855a;
+  --success-soft: #e2f3e9;
+  --warning: #b06f12;
+  --warning-soft: #fbeecb;
+  --danger: #b23a2e;
+  --danger-soft: #f8e2df;
+  --info: #2f5d96;
+  --info-soft: #e6eef8;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-elevated: var(--elevated);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-soft: var(--secondary-soft);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-rose: var(--rose);
+  --color-rose-soft: var(--rose-soft);
+
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 0.35rem);
+  --radius-sm: calc(var(--radius) - 0.55rem);
+  --radius-2xl: calc(var(--radius) + 0.5rem);
+
+  --font-sans: var(--font-inter), "Segoe UI", system-ui, sans-serif;
+  --font-serif: var(--font-lora), Georgia, "Times New Roman", serif;
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 17px; /* comfortable reading at every age */
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.font-serif {
+  font-family: var(--font-lora), Georgia, "Times New Roman", serif;
+}
+
+@layer base {
+  button,
+  a,
+  [role="button"] {
+    touch-action: manipulation;
+  }
+}
+
+/* Ambient, luminous background bloom (gorgeous on dark) */
+.bg-warm-grain {
+  background-color: var(--background);
+  background-image:
+    radial-gradient(ellipse 60% 45% at 8% -2%, color-mix(in srgb, var(--primary) 26%, transparent), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 95% 2%, color-mix(in srgb, var(--secondary) 22%, transparent), transparent 58%),
+    radial-gradient(ellipse 70% 45% at 50% 104%, color-mix(in srgb, var(--gold) 16%, transparent), transparent 60%),
+    radial-gradient(ellipse 40% 38% at 98% 90%, color-mix(in srgb, var(--rose) 20%, transparent), transparent 55%);
+}
+
+/* Warm gradient surface for hero / memory cards */
+.bg-warm-hero {
+  background-image: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--primary) 22%, var(--card)) 0%,
+    color-mix(in srgb, var(--rose) 16%, var(--card)) 48%,
+    color-mix(in srgb, var(--secondary) 20%, var(--card)) 100%
+  );
+}
+
+/* Gradient text for hero accents */
+.text-gradient {
+  background: linear-gradient(120deg, var(--primary), var(--rose) 55%, var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Glass card (subtle, premium) */
+.glass {
+  background: color-mix(in srgb, var(--card) 82%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--muted-foreground) 32%, transparent);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+.candle-flicker {
+  animation: candle 3.5s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+@keyframes candle {
+  0%, 100% { opacity: 0.9; transform: scaleY(1) rotate(-1deg); }
+  50% { opacity: 1; transform: scaleY(1.06) rotate(1deg); }
+}
+
+.float-soft {
+  animation: floaty 6s ease-in-out infinite;
+}
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Gentle attention pulse for the "next step" highlight */
+.pulse-ring {
+  animation: pulsering 2.6s ease-in-out infinite;
+}
+@keyframes pulsering {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--primary) 40%, transparent); }
+  50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--primary) 0%, transparent); }
+}

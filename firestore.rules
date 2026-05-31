@@ -1,0 +1,36 @@
+rules_version = '2';
+
+// Antim Sahara — Firestore Security Rules.
+// Scope every read/write to the authenticated owner. Death/financial data is highly
+// sensitive (DPDP Act 2023) — deny by default, never trust the client.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // A user can only read/write their own profile.
+    match /users/{uid} {
+      allow read, write: if isSignedIn() && request.auth.uid == uid;
+    }
+
+    // Cases belong to one owner. Subcollections inherit the owner check.
+    match /cases/{caseId} {
+      allow read, update, delete: if isSignedIn()
+        && resource.data.ownerUid == request.auth.uid;
+      allow create: if isSignedIn()
+        && request.resource.data.ownerUid == request.auth.uid;
+
+      match /{document=**} {
+        allow read, write: if isSignedIn()
+          && get(/databases/$(database)/documents/cases/$(caseId)).data.ownerUid == request.auth.uid;
+      }
+    }
+
+    // Everything else is denied.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

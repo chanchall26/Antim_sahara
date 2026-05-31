@@ -1,0 +1,10 @@
+import { chromium } from "playwright";
+const b = await chromium.launch();
+const p = await b.newPage({ viewport: { width: 1320, height: 880 } });
+await p.goto("http://localhost:3000");
+await p.evaluate(() => localStorage.setItem("antim.theme", "light"));
+await p.reload({ waitUntil: "networkidle" });
+await p.waitForTimeout(600);
+await p.screenshot({ path: "scripts/shots/light-landing.png" });
+console.log("light shot saved");
+await b.close();
