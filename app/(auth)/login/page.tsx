@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
-import { AlertCircle, ArrowLeft, Eye, EyeOff, Loader2, Mail, Sparkles } from "lucide-react";
+import { AlertCircle, ArrowLeft, Eye, EyeOff, Loader2, Mail } from "lucide-react";
 import { Logo } from "@/components/shared/Logo";
 import { LanguageToggle } from "@/components/shared/LanguageToggle";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
@@ -16,7 +16,7 @@ import { useT } from "@/lib/i18n/I18nProvider";
 export default function LoginPage() {
   const t = useT();
   const router = useRouter();
-  const { signInDemo, signInWithEmail, signInWithGoogle, usingFirebase } = useAuth();
+  const { signInWithEmail, signInWithGoogle, usingFirebase } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -57,11 +57,6 @@ export default function LoginPage() {
       setError((e as AuthError).message ?? "Something went wrong.");
       setBusy(false);
     }
-  };
-
-  const onDemo = () => {
-    signInDemo(name.trim() || "Friend");
-    go();
   };
 
   return (
@@ -172,18 +167,6 @@ export default function LoginPage() {
                 {t("auth.signInCreate")}
               </Button>
             </div>
-
-            <div className="my-5 flex items-center gap-3">
-              <span className="h-px flex-1 bg-border" />
-              <span className="text-xs text-muted-foreground">{t("auth.or")}</span>
-              <span className="h-px flex-1 bg-border" />
-            </div>
-
-            <Button size="lg" variant="secondary" className="w-full" onClick={onDemo} disabled={busy}>
-              <Sparkles className="h-5 w-5" />
-              {t("auth.continueDemo")}
-            </Button>
-            <p className="mt-3 text-center text-xs text-muted-foreground">{t("auth.demoNote")}</p>
           </div>
 
           {usingFirebase && (

@@ -7,6 +7,7 @@ import { ArrowLeft, Check, CircleDot, ListChecks, MapPin, PlayCircle, RotateCcw 
 import { CategoryIcon, DeadlineChip, StatusBadge } from "@/components/roadmap/shared";
 import { DocGenerator } from "@/components/case/DocGenerator";
 import { CourtFeeEstimator } from "@/components/case/CourtFeeEstimator";
+import { StateInfoPanel } from "@/components/case/StateInfoPanel";
 import { VoiceButton } from "@/components/shared/VoiceButton";
 import { DisclaimerNote } from "@/components/shared/Disclaimer";
 import { CaseNotFound } from "@/components/case/CaseNotFound";
@@ -132,13 +133,14 @@ export default function TaskPage({
           </Card>
         )}
 
-        {/* Court-fee estimator for succession tasks */}
+        {/* Court-fee estimator + local court details for succession tasks */}
         {task.category === "succession" && (
-          <div className="mt-5">
+          <div className="mt-5 space-y-5">
             <CourtFeeEstimator
               defaultState={c.deceased.domicileState}
               defaultValue={c.assets.reduce((sum, a) => sum + (a.approxValue ?? 0), 0) || undefined}
             />
+            <StateInfoPanel state={c.deceased.domicileState} />
           </div>
         )}
 

@@ -3,13 +3,12 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { LogOut, ShieldCheck, User as UserIcon, Sparkles } from "lucide-react";
+import { LogOut, ShieldCheck, User as UserIcon } from "lucide-react";
 import { Logo } from "@/components/shared/Logo";
 import { LanguageToggle } from "@/components/shared/LanguageToggle";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { useT } from "@/lib/i18n/I18nProvider";
-import { DEMO_MODE } from "@/lib/config";
 
 export function TopBar() {
   const { user, signOut } = useAuth();
@@ -34,12 +33,6 @@ export function TopBar() {
         </Link>
 
         <div className="flex items-center gap-2">
-          {DEMO_MODE && (
-            <span className="hidden items-center gap-1.5 rounded-full bg-secondary-soft px-2.5 py-1 text-[11px] font-medium text-secondary md:inline-flex">
-              <Sparkles className="h-3.5 w-3.5" />
-              Demo mode
-            </span>
-          )}
           <ThemeToggle />
           <LanguageToggle compact />
 

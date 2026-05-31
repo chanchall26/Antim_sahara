@@ -9,6 +9,7 @@ import { CaseTabs } from "@/components/case/CaseTabs";
 import { TaskCard } from "@/components/roadmap/TaskCard";
 import { NextStep } from "@/components/roadmap/NextStep";
 import { AgentActivityPanel } from "@/components/roadmap/AgentActivity";
+import { StateInfoPanel } from "@/components/case/StateInfoPanel";
 import { DisclaimerNote } from "@/components/shared/Disclaimer";
 import { CaseNotFound } from "@/components/case/CaseNotFound";
 import { Button } from "@/components/ui/button";
@@ -86,6 +87,7 @@ export default function RoadmapPage({ params }: { params: Promise<{ caseId: stri
 
           <aside className="space-y-4 lg:sticky lg:top-20 lg:self-start">
             <AgentActivityPanel parallelTracks={tracks} />
+            <StateInfoPanel state={c.deceased.domicileState} />
             <Link href={`/case/${caseId}/unclaimed`}>
               <Button variant="outline" className="w-full">
                 {t("unclaimed.title")}

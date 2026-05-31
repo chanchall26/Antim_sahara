@@ -13,6 +13,7 @@ export interface CourtFeeRule {
 }
 
 export const COURT_FEE_RULES: CourtFeeRule[] = [
+  { state: "Madhya Pradesh", percent: 3, cap: null, note: "Ad valorem under the Court-Fees Act as in force in MP; confirm the current slab/cap at your District Court (Jabalpur / Indore / Gwalior region)." },
   { state: "Maharashtra", percent: 7.5, cap: 75000, note: "Widows: probate/LoA max reduced to ₹10,000 (2024)." },
   { state: "West Bengal", percent: 3, cap: 50000, note: "Capped at ₹50,000 regardless of value." },
   { state: "Karnataka", percent: 5, cap: 30000, note: "Linked to the probate scale (~₹30,000 cap)." },

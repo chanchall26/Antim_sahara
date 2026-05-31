@@ -3,30 +3,20 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
-import { ArrowRight, HeartHandshake, Plus, Sparkles } from "lucide-react";
+import { ArrowRight, HeartHandshake, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProgressRing } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/misc";
 import { useCases } from "@/lib/store/CasesProvider";
-import { useAuth } from "@/lib/auth/AuthProvider";
 import { useT } from "@/lib/i18n/I18nProvider";
 import { progressPercent } from "@/lib/store/caseLogic";
-import { buildDemoCase } from "@/lib/demo/seed";
 import type { EstateCase } from "@/types";
 
 export default function DashboardPage() {
   const t = useT();
   const router = useRouter();
-  const { user } = useAuth();
-  const { cases, ready, upsertCase } = useCases();
-
-  const loadDemo = () => {
-    if (!user) return;
-    const demo = buildDemoCase(user.uid);
-    upsertCase(demo);
-    router.push(`/case/${demo.id}`);
-  };
+  const { cases, ready } = useCases();
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
@@ -53,13 +43,12 @@ export default function DashboardPage() {
           <Skeleton className="h-40" />
         </div>
       ) : cases.length === 0 ? (
-        <EmptyState onDemo={loadDemo} onCreate={() => router.push("/onboarding")} />
+        <EmptyState onCreate={() => router.push("/onboarding")} />
       ) : (
         <div className="grid gap-4 sm:grid-cols-2">
           {cases.map((c, i) => (
             <CaseCard key={c.id} c={c} index={i} />
           ))}
-          <DemoTile onDemo={loadDemo} />
         </div>
       )}
     </div>
@@ -100,25 +89,7 @@ function CaseCard({ c, index }: { c: EstateCase; index: number }) {
   );
 }
 
-function DemoTile({ onDemo }: { onDemo: () => void }) {
-  const t = useT();
-  return (
-    <button
-      onClick={onDemo}
-      className="flex items-center gap-4 rounded-2xl border border-dashed border-secondary/40 bg-secondary-soft/40 p-5 text-left transition-colors hover:bg-secondary-soft"
-    >
-      <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-secondary text-secondary-foreground">
-        <Sparkles className="h-5 w-5" />
-      </span>
-      <div>
-        <h3 className="font-medium">{t("dashboard.loadDemo")}</h3>
-        <p className="text-xs text-muted-foreground">{t("dashboard.demoNote")}</p>
-      </div>
-    </button>
-  );
-}
-
-function EmptyState({ onDemo, onCreate }: { onDemo: () => void; onCreate: () => void }) {
+function EmptyState({ onCreate }: { onCreate: () => void }) {
   const t = useT();
   return (
     <motion.div
@@ -133,14 +104,10 @@ function EmptyState({ onDemo, onCreate }: { onDemo: () => void; onCreate: () => 
       <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
         {t("dashboard.noCasesBody")}
       </p>
-      <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <Button size="lg" onClick={onCreate}>
+      <div className="mt-7 flex justify-center">
+        <Button size="lg" variant="gradient" onClick={onCreate}>
           <Plus className="h-5 w-5" />
           {t("dashboard.createCase")}
-        </Button>
-        <Button size="lg" variant="secondary" onClick={onDemo}>
-          <Sparkles className="h-5 w-5" />
-          {t("dashboard.loadDemo")}
         </Button>
       </div>
     </motion.div>
