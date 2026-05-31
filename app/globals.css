@@ -262,3 +262,126 @@ body {
   0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--primary) 40%, transparent); }
   50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--primary) 0%, transparent); }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   HANDCRAFTED DETAIL LAYER — texture, typography, micro-interaction
+   ════════════════════════════════════════════════════════════════ */
+
+/* Tactile film grain over the whole UI (very low opacity = warmth, not noise) */
+.texture-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.texture-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(130% 100% at 50% -10%, transparent 62%, color-mix(in srgb, var(--background) 55%, #000 22%) 100%);
+}
+
+/* Typographic craft — ligatures, kerning, refined numerals */
+h1, h2, h3, .font-serif {
+  font-feature-settings: "liga" 1, "calt" 1, "kern" 1;
+  letter-spacing: -0.011em;
+}
+.tnum { font-variant-numeric: tabular-nums; }
+.tracked-label {
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/* Card that catches light: hairline top highlight + layered depth */
+.card-craft {
+  position: relative;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--card) 92%, #fff 8%) 0%, var(--card) 42%);
+  border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+  box-shadow:
+    inset 0 1px 0 0 color-mix(in srgb, #fff 7%, transparent),
+    0 1px 2px rgba(0, 0, 0, 0.12),
+    0 14px 34px -22px rgba(0, 0, 0, 0.55);
+}
+.card-craft::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, #fff 24%, transparent) 50%, transparent);
+  border-radius: inherit;
+}
+
+/* Hover lift used on interactive cards */
+.lift {
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease;
+}
+.lift:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 0 color-mix(in srgb, #fff 10%, transparent),
+    0 2px 4px rgba(0, 0, 0, 0.14),
+    0 22px 44px -24px color-mix(in srgb, var(--primary) 45%, rgba(0, 0, 0, 0.6));
+}
+
+/* Sheen swipe on hover (buttons / featured cards) */
+.sheen { position: relative; overflow: hidden; }
+.sheen::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -160%;
+  width: 65%;
+  height: 100%;
+  background: linear-gradient(110deg, transparent, color-mix(in srgb, #fff 26%, transparent), transparent);
+  transform: skewX(-18deg);
+  transition: left 0.65s ease;
+  pointer-events: none;
+}
+.sheen:hover::after { left: 160%; }
+
+/* Animated link underline */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1.5px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s ease;
+}
+.link-underline:hover { background-size: 100% 1.5px; }
+
+/* Glowing status dot */
+.dot-glow {
+  box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 18%, transparent), 0 0 10px 0 currentColor;
+}
+
+/* Vertical timeline connector + node */
+.timeline-line {
+  background: linear-gradient(180deg, transparent, var(--border) 8%, var(--border) 92%, transparent);
+}
+
+/* Floating embers near the diya */
+.ember {
+  position: absolute;
+  border-radius: 999px;
+  background: radial-gradient(circle, var(--gold), transparent 70%);
+  opacity: 0;
+  animation: ember 4.5s ease-in-out infinite;
+}
+@keyframes ember {
+  0% { transform: translateY(0) scale(0.6); opacity: 0; }
+  20% { opacity: 0.8; }
+  100% { transform: translateY(-46px) scale(1.1); opacity: 0; }
+}
+
+/* Subtle dotted texture for hero/empty surfaces */
+.dot-grid {
+  background-image: radial-gradient(color-mix(in srgb, var(--muted-foreground) 22%, transparent) 1px, transparent 1px);
+  background-size: 22px 22px;
+}

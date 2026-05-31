@@ -77,7 +77,7 @@ function CaseCard({ c, index }: { c: EstateCase; index: number }) {
     >
       <Link
         href={`/case/${c.id}`}
-        className="group flex items-center gap-5 rounded-2xl border border-border bg-card p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+        className="card-craft lift group flex items-center gap-5 rounded-2xl p-5"
       >
         <ProgressRing value={pct} label={`${pct}%`} sublabel={t("status.done")} />
         <div className="min-w-0 flex-1">

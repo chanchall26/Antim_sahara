@@ -8,12 +8,12 @@ import {
   FileText,
   HeartHandshake,
   MessageCircleHeart,
-  ShieldCheck,
 } from "lucide-react";
 import { Logo } from "@/components/shared/Logo";
 import { LanguageToggle } from "@/components/shared/LanguageToggle";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { DisclaimerFooter } from "@/components/shared/Disclaimer";
+import { Ornament } from "@/components/shared/Ornament";
 import { Button } from "@/components/ui/button";
 import { useT } from "@/lib/i18n/I18nProvider";
 
@@ -111,7 +111,12 @@ export default function LandingPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="relative"
           >
-            <div className="float-soft rounded-[2rem] border border-border bg-warm-hero p-7 shadow-2xl backdrop-blur">
+            <div className="float-soft card-craft relative overflow-hidden rounded-[2rem] bg-warm-hero p-7 shadow-2xl backdrop-blur">
+              {/* floating embers from the diya */}
+              <span className="ember left-[calc(50%-18px)] top-16 h-1.5 w-1.5" style={{ animationDelay: "0s" }} />
+              <span className="ember left-[50%] top-14 h-1 w-1" style={{ animationDelay: "1.2s" }} />
+              <span className="ember left-[calc(50%+16px)] top-16 h-1.5 w-1.5" style={{ animationDelay: "2.4s" }} />
+              <span className="ember left-[calc(50%+4px)] top-12 h-1 w-1" style={{ animationDelay: "3.3s" }} />
               <Logo withWord={false} className="scale-[2.2] py-6" />
               <div className="mt-6 space-y-3">
                 {[
@@ -184,7 +189,7 @@ export default function LandingPage() {
 
       {/* Final CTA */}
       <section className="mx-auto w-full max-w-3xl px-4 py-20 text-center sm:px-6">
-        <ShieldCheck className="mx-auto mb-4 h-8 w-8 text-secondary" />
+        <Ornament className="mb-8" />
         <h2 className="font-serif text-3xl font-semibold leading-tight sm:text-4xl">
           {t("landing.finalCta")}
         </h2>

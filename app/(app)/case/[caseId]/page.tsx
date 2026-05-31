@@ -146,7 +146,9 @@ function Section({
             {tasks.length === 0 ? (
               <p className="rounded-xl bg-success-soft/50 p-4 text-sm text-success">{emptyHint}</p>
             ) : (
-              tasks.map((task, i) => <TaskCard key={task.id} task={task} caseId={caseId} index={i} />)
+              tasks.map((task, i) => (
+                <TaskCard key={task.id} task={task} caseId={caseId} index={i} isLast={i === tasks.length - 1} />
+              ))
             )}
           </motion.div>
         )}
@@ -170,7 +172,7 @@ function DoneSection({ tasks, caseId, title }: { tasks: CaseTask[]; caseId: stri
         {open && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-3">
             {tasks.map((task, i) => (
-              <TaskCard key={task.id} task={task} caseId={caseId} index={i} />
+              <TaskCard key={task.id} task={task} caseId={caseId} index={i} isLast={i === tasks.length - 1} />
             ))}
           </motion.div>
         )}

@@ -6,6 +6,7 @@ import { I18nProvider } from "@/lib/i18n/I18nProvider";
 import { AuthProvider } from "@/lib/auth/AuthProvider";
 import { CasesProvider } from "@/lib/store/CasesProvider";
 import { ConsentGate } from "@/components/shared/ConsentModal";
+import { Texture } from "@/components/shared/Texture";
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
@@ -14,6 +15,7 @@ export function Providers({ children }: { children: ReactNode }) {
         <AuthProvider>
           <CasesProvider>
             {children}
+            <Texture />
             <ConsentGate />
           </CasesProvider>
         </AuthProvider>
