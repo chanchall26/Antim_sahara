@@ -12,8 +12,10 @@ export const DEMO_MODE: boolean =
   (process.env.NEXT_PUBLIC_DEMO_MODE ?? process.env.DEMO_MODE ?? "true").toLowerCase() !==
   "false";
 
-/** True if a Gemini key is configured server-side. */
-export const HAS_GEMINI = Boolean(process.env.GEMINI_API_KEY);
+/** True if at least one Gemini key is configured server-side (single or multi). */
+export const HAS_GEMINI = Boolean(
+  process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEYS || process.env.GEMINI_API_KEY_2,
+);
 
 /** True if Firebase web config is present (client-side detectable). */
 export const HAS_FIREBASE = Boolean(
